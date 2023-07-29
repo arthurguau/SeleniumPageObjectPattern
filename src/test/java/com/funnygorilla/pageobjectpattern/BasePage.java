@@ -30,6 +30,7 @@ public class BasePage {
          */
     	//driver = WebDriverManager.getInstance(browser).create(); 
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         wait = new WebDriverWait(driver, timeoutSec);  
     }
 

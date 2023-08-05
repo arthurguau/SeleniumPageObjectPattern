@@ -28,7 +28,7 @@ public class LoginPage extends BasePage {
         /*
          * Class used to initialize all the previously declared web elements with @FindBy/@FindAll).
          */
-        PageFactory.initElements(driver, this); 
+        PageFactory.initElements(this.getDriver(), this); 
         visit("https://bonigarcia.dev/selenium-webdriver-java/login-form.html");
     }
 

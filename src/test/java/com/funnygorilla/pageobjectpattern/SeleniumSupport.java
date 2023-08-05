@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.funnygorilla.pageobjectpattern;
 
 import org.openqa.selenium.TimeoutException;
@@ -10,19 +7,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * create a base page class that encapsulates the common logic for all the page classes.
- * @author guson
- *
- */
-public class BasePage {
-	
-	private WebDriver driver;
+public class SeleniumSupport {
 
+	private static SeleniumSupport support = null;
+	private WebDriver driver;
 	private WebDriverWait wait;
     private int timeoutSec = 5; // wait timeout (5 seconds by default)
 
-    public BasePage() {
+    
+    private SeleniumSupport() {
         /*
          * WebDriverManager is an open-source Java library that carries out the management 
          * (i.e., download, setup, and maintenance) of the drivers required by Selenium WebDriver
@@ -33,6 +26,13 @@ public class BasePage {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, timeoutSec);  
+    }
+    
+    public static SeleniumSupport getInstance() {
+    	if (null == support) {
+    		support = new SeleniumSupport();
+    	}
+    	return support;
     }
 
     public void setTimeoutSec(int timeoutSec) {  
@@ -55,6 +55,15 @@ public class BasePage {
     	driver.quit();
     }
     
+    public void close () {
+    	driver.close();
+    }
+    
+    public void deleCookies () {
+    	driver.manage().deleteAllCookies();
+    }
+   
+    
     public boolean isDisplayed(WebElement element) {  
         try {
         	wait.until(ExpectedConditions.visibilityOf(element));
@@ -67,8 +76,5 @@ public class BasePage {
     public WebDriver getDriver() {
     	return driver;
     }
-    
-    public void setDriver(WebDriver driver) {
-    	this.driver = driver;
-    }
+
 }
